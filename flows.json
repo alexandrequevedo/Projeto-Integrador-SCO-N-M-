@@ -1,0 +1,349 @@
+[
+    {
+        "id": "fb960777d56fc0e3",
+        "type": "tab",
+        "label": "Projeto integrador ",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "5f7be8b7aaa622d5",
+        "type": "comment",
+        "z": "fb960777d56fc0e3",
+        "name": "1 - No esp, deixar configurado pra enviar os dados em formato .json ou compatível com o nó json, igual foi no trabalho 1 de RIC",
+        "info": "",
+        "x": 670,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "84bba9e29af6a244",
+        "type": "function",
+        "z": "fb960777d56fc0e3",
+        "name": "function 37",
+        "func": "msg.payload = {\n  valor1: Number((Math.random() * 100).toFixed(3)),\n  valor2: Number((Math.random() * 50).toFixed(3)),\n  ativo: Math.random() < 0.5\n};\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 310,
+        "y": 320,
+        "wires": [
+            [
+                "31ec0dd22a0ba506"
+            ]
+        ]
+    },
+    {
+        "id": "52cc0643f3f266df",
+        "type": "inject",
+        "z": "fb960777d56fc0e3",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "3",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "10",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 260,
+        "wires": [
+            [
+                "84bba9e29af6a244"
+            ]
+        ]
+    },
+    {
+        "id": "31ec0dd22a0ba506",
+        "type": "switch",
+        "z": "fb960777d56fc0e3",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "hask",
+                "v": "valor1",
+                "vt": "str"
+            },
+            {
+                "t": "hask",
+                "v": "valor2",
+                "vt": "str"
+            },
+            {
+                "t": "hask",
+                "v": "ativo",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 390,
+        "y": 240,
+        "wires": [
+            [
+                "4e0ad4661ea68fe1"
+            ],
+            [
+                "89ecc8ff0e510394"
+            ],
+            [
+                "e7e48b17ca15a90b"
+            ]
+        ]
+    },
+    {
+        "id": "4e0ad4661ea68fe1",
+        "type": "change",
+        "z": "fb960777d56fc0e3",
+        "name": "payload=valor1",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "valor1",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.valor1",
+                "tot": "msg"
+            }
+        ],
+        "x": 560,
+        "y": 200,
+        "wires": [
+            [
+                "5e8dfaad2ea8be60"
+            ]
+        ]
+    },
+    {
+        "id": "89ecc8ff0e510394",
+        "type": "change",
+        "z": "fb960777d56fc0e3",
+        "name": "payload=valor2",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "valor2",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.valor2",
+                "tot": "msg"
+            }
+        ],
+        "x": 560,
+        "y": 240,
+        "wires": [
+            [
+                "86b774a641985d95"
+            ]
+        ]
+    },
+    {
+        "id": "e7e48b17ca15a90b",
+        "type": "change",
+        "z": "fb960777d56fc0e3",
+        "name": "payload=ativo",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "ativo",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.ativo",
+                "tot": "msg"
+            }
+        ],
+        "x": 560,
+        "y": 280,
+        "wires": [
+            [
+                "e3763ee6bed2ad7a"
+            ]
+        ]
+    },
+    {
+        "id": "5e8dfaad2ea8be60",
+        "type": "function",
+        "z": "fb960777d56fc0e3",
+        "name": "function 46",
+        "func": "var valor = msg.payload;         \n// Grava no contexto global com um nome fixo\nglobal.set(\"tanque1\", valor);                   \n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "86b774a641985d95",
+        "type": "function",
+        "z": "fb960777d56fc0e3",
+        "name": "function 47",
+        "func": "var valor = msg.payload;         \n// Grava no contexto global com um nome fixo\nglobal.set(\"tanque2\", valor);                   \n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e3763ee6bed2ad7a",
+        "type": "function",
+        "z": "fb960777d56fc0e3",
+        "name": "function 48",
+        "func": "var valor = msg.payload;         \n// Grava no contexto global com um nome fixo\nglobal.set(\"ModoOp\", valor);                   \n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "72b988a4c71afe5e",
+        "type": "mysql",
+        "z": "fb960777d56fc0e3",
+        "mydb": "d0facd695a5b64a5",
+        "name": "",
+        "x": 770,
+        "y": 400,
+        "wires": [
+            [
+                "a4692fc519c2d04c"
+            ]
+        ]
+    },
+    {
+        "id": "ddd85a360c6621c9",
+        "type": "function",
+        "z": "fb960777d56fc0e3",
+        "name": "function 1",
+        "func": "/**\n * Atualiza malhasdecontrole com valores das globais:\n *  - global.tanque1  -> saida_manual_percent do \"Tanque 1\"\n *  - global.tanque2  -> saida_manual_percent do \"Tanque 2\"\n *  - global.ModoOp   -> setpoint de ambos os tanques\n *\n * Saída para o nó MySQL:\n *  - msg.topic   : SQL com placeholders\n *  - msg.payload : [ModoOp, tanque1, tanque2]\n */\n\nfunction clamp01(x) { return Math.max(0, Math.min(100, Number(x))); }\n\nconst g1 = global.get('tanque1');\nconst g2 = global.get('tanque2');\nconst gsp = global.get('ModoOp');\n\nif (![g1, g2, gsp].every(v => v !== undefined && v !== null && !Number.isNaN(Number(v)))) {\n  node.status({ fill: \"red\", shape: \"dot\", text: \"globais ausentes/nao numericas\" });\n  node.warn(\"Defina globais numericas: tanque1, tanque2, ModoOp.\");\n  return null;\n}\n\nconst t1 = clamp01(g1);\nconst t2 = clamp01(g2);\nconst sp = Number(gsp); // se quiser, aplique clamp01 aqui também\n\n// 1 única query (sem precisar de múltiplas instruções) usando CASE:\nmsg.topic = `\n  UPDATE malhasdecontrole\n  SET\n    setpoint = ?,\n    saida_manual_percent = CASE nome_malha\n      WHEN 'Tanque 1' THEN ?\n      WHEN 'Tanque 2' THEN ?\n      ELSE saida_manual_percent\n    END,\n    ultima_modificacao = CURRENT_TIMESTAMP\n  WHERE nome_malha IN ('Tanque 1', 'Tanque 2');\n`;\nmsg.payload = [sp, t1, t2];\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 400,
+        "wires": [
+            [
+                "72b988a4c71afe5e"
+            ]
+        ]
+    },
+    {
+        "id": "8527552a04c67676",
+        "type": "inject",
+        "z": "fb960777d56fc0e3",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 340,
+        "y": 400,
+        "wires": [
+            [
+                "ddd85a360c6621c9"
+            ]
+        ]
+    },
+    {
+        "id": "a4692fc519c2d04c",
+        "type": "debug",
+        "z": "fb960777d56fc0e3",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 960,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "d0facd695a5b64a5",
+        "type": "MySQLdatabase",
+        "name": "BD1",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "projetointegrador",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "fe719871166d44d9",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-node-mysql": "2.0.0"
+        }
+    }
+]
